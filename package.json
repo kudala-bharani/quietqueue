@@ -1,0 +1,16 @@
+{
+  "name": "quietqueue",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A local-first, open-weight AI task batcher for doing less juggling.",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "start": "python3 -m http.server 4173",
+    "test:model": "node scripts/test-model.mjs"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@huggingface/transformers": "3.8.1"
+  }
+}

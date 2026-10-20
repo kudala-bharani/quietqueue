@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#213d32">
+  <meta name="description" content="Turn a scattered to-do list into a small, focused plan. QuietQueue groups related tasks, respects your time, and keeps your task text in your browser.">
+  <title>QuietQueue — Less juggling. More done.</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%23213d32'/%3E%3Cpath d='M11 24c0-10 8-14 19-14 0 12-5 20-15 18m0-4L25 15' fill='none' stroke='%23f3f3dc' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <noscript><p class="noscript-note">QuietQueue needs JavaScript to build your local plan. Enable it in your browser to get started. Your task text is processed on your device.</p></noscript>
+  <a class="skip-link" href="#workspace">Skip to your workspace</a>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="wordmark" href="./" aria-label="QuietQueue home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 20C7 11 15 7 25 7c0 11-5 18-14 17M11 21l10-10"/></svg></span>
+        QuietQueue<span class="wordmark-dot">.</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <button class="text-button about-trigger" type="button">How it works <span aria-hidden="true">↗</span></button>
+        <a id="source-link" class="source-link" href="https://github.com/kudala-bharani/quietqueue" target="_blank" rel="noopener noreferrer" aria-label="Open QuietQueue source code on GitHub">Open source <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5H5v10h10v-2M10 4h6v6M9 11l7-7"/></svg></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="tiny-leaf" aria-hidden="true"></span> A LITTLE LESS, A LITTLE BETTER</div>
+          <h1 id="hero-title">Less juggling.<br><em>More done.</em></h1>
+          <p>Give your scattered tasks a quieter rhythm.<br class="desktop-break"> A small plan, similar tasks together, room to breathe.</p>
+        </div>
+        <div class="hero-aside" aria-hidden="true">
+          <div class="illustration">
+            <svg viewBox="0 0 270 200" role="presentation">
+              <path class="art-branch" d="M29 62c67 2 118 5 205-11"/>
+              <path class="art-leaf" d="M194 57c2-21 11-30 28-32-1 18-9 29-28 32Z"/>
+              <path class="art-leaf-small" d="M179 60c-9-16-22-20-34-15 7 12 18 17 34 15Z"/>
+              <path class="art-body" d="M91 78c-19 2-32 20-24 42 12 34 40 49 64 44 28-5 47-40 36-70-8-24-36-32-76-16Z"/>
+              <path class="art-arm" d="M90 105c-18-5-24-18-19-44 1-8 11-9 13-1l5 20m53 21c10-6 13-17 12-37 0-8 10-11 13-3 8 26 0 46-16 53"/>
+              <ellipse class="art-face" cx="118" cy="112" rx="34" ry="28" transform="rotate(10 118 112)"/>
+              <path class="art-eye-patch" d="M92 108c1-10 18-12 21-4 2 8-10 18-17 14-4-2-5-5-4-10m32 0c5-9 20-5 22 3 2 9-4 14-9 13-8-1-17-8-13-16"/>
+              <path class="art-eyes" d="m99 109 5 1m28 5 5 1"/>
+              <ellipse fill="#35483d" cx="119" cy="117" rx="4" ry="3" transform="rotate(10 119 117)"/>
+              <path class="art-smile" d="M112 126c3 5 9 6 13 2"/>
+              <path class="art-claws" d="m73 59 1 7m5-8 1 7m76-5 1 7m5-8 1 7"/>
+              <path class="art-spark" d="m49 118-7 3m151-20 7-2m-28 60 4 7"/>
+            </svg>
+          </div>
+          <span class="handwritten">Your pace is a good pace.</span>
+        </div>
+      </section>
+
+      <section class="workspace" id="workspace" aria-label="Task planning workspace">
+        <aside class="input-panel panel" aria-labelledby="input-title">
+          <form id="plan-form">
+            <div class="section-heading">
+              <div><div class="step-label">01 / MAKE SOME SPACE</div><h2 id="input-title">What’s on your mind?</h2></div>
+              <span class="mini-icon" aria-hidden="true">↘</span>
+            </div>
+            <p class="input-help" id="task-help">One task per line. Add [5m] to set a time estimate.</p>
+            <label class="sr-only" for="task-input">Your tasks, one per line</label>
+            <div class="textarea-wrap">
+              <textarea id="task-input" aria-describedby="task-help task-count" spellcheck="false" placeholder="Reply to a few emails [5m]&#10;Sketch an idea [10m]&#10;Make a little progress…" rows="8" maxlength="12000"></textarea>
+              <div class="textarea-footer"><span id="task-count">0 tasks</span><button type="button" id="sample-button" class="inline-button">Try an example <span aria-hidden="true">↗</span></button></div>
+            </div>
+            <fieldset class="time-fieldset">
+              <legend>How much time do you have?</legend>
+              <div class="segmented-control">
+                <label><input type="radio" name="budget" value="15"><span>15 <small>min</small></span></label>
+                <label><input type="radio" name="budget" value="30" checked><span>30 <small>min</small></span></label>
+                <label><input type="radio" name="budget" value="60"><span>60 <small>min</small></span></label>
+              </div>
+            </fieldset>
+            <div class="energy-row"><label for="energy">Your energy today</label><div class="select-wrap"><select id="energy" aria-describedby="energy-note"><option value="low">Low · easy wins</option><option value="medium" selected>Medium · steady</option><option value="high">High · go deeper</option></select><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></div></div>
+            <p class="energy-note" id="energy-note"></p>
+            <div class="ai-setting">
+              <label class="toggle-label" for="use-ai"><span><span class="ai-label">Group with on-device AI</span><span class="optional-label">OPTIONAL</span></span><input id="use-ai" type="checkbox" role="switch" aria-describedby="ai-note"><span class="toggle-track" aria-hidden="true"></span></label>
+              <p id="ai-note">Off by default. Enabling downloads an open-weight model (~23 MB, plus runtime) from external hosts. Task text stays in your browser.</p>
+            </div>
+            <button class="primary-button" id="plan-button" type="submit"><span>Make a quiet plan</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5"/></svg></button>
+            <div id="generation-status" class="generation-status" role="status" aria-live="polite"></div>
+            <p class="privacy-note"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="4" y="7" width="8" height="6" rx="1.5"/><path d="M5.5 7V4.5a2.5 2.5 0 0 1 5 0V7"/></svg>No account. No task uploads. Just you.</p>
+          </form>
+        </aside>
+
+        <section class="plan-panel" aria-labelledby="plan-title" aria-busy="false">
+          <div class="plan-heading">
+            <div><div class="step-label">02 / FIND YOUR RHYTHM</div><h2 id="plan-title">Your next 30 minutes</h2></div>
+            <span id="mode-badge" class="mode-badge"><span></span>Rule-based</span>
+          </div>
+          <div id="plan-content"></div>
+          <div id="plan-actions" class="plan-actions" hidden>
+            <p><span class="small-spark" aria-hidden="true">✳</span> Small steps still move you forward.</p>
+            <button class="export-button" id="export-button" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10m-4-4 4 4 4-4M4 14v3h12v-3"/></svg>Export plan</button>
+          </div>
+        </section>
+      </section>
+
+      <section class="principles" aria-label="How QuietQueue helps">
+        <div><span class="principle-number">01</span><div><h3>Empty your head</h3><p>Messy lists are welcome here.</p></div></div>
+        <div><span class="principle-number">02</span><div><h3>Stay in one headspace</h3><p>Related tasks, one gentle batch.</p></div></div>
+        <div><span class="principle-number">03</span><div><h3>Leave the rest for later</h3><p>A parking lot, not a guilt trip.</p></div></div>
+      </section>
+    </main>
+    <footer class="site-footer"><p>Built for focus. Designed for humans.</p><div><span id="storage-status">Saved only in this browser</span><span class="footer-divider" aria-hidden="true">/</span><button id="clear-data" type="button" class="inline-button">Clear local data</button></div></footer>
+  </div>
+
+  <dialog id="about-dialog" aria-labelledby="about-title">
+    <div class="dialog-header"><span class="step-label">A QUIETER WAY TO WORK</span><button type="button" id="close-dialog" class="close-button" aria-label="Close explanation">×</button></div>
+    <h2 id="about-title">Less switching.<br>More breathing room.</h2>
+    <p>QuietQueue groups related tasks into a few small batches and fits a selection inside your time budget. The rest stays in a parking lot. Time estimates are planning aids, not predictions.</p>
+    <h3>Useful without AI</h3><p>The default planner uses transparent task categories and works without external requests. Your input and checkoffs are saved only in this browser when storage is available.</p>
+    <h3>Open weights. Local inference.</h3><p>The optional AI mode uses all-MiniLM-L6-v2 embeddings through Transformers.js. It downloads model and runtime files from external hosts, then compares task meanings in your browser. Your task text is never sent to a model server. If loading fails, the rule-based planner still works.</p>
+    <h3>Honest, small numbers</h3><p>“Switches avoided” compares the selected tasks in their original order with their batched order. It is a count of category changes, not measured time saved. Checking tasks off does not change the estimate.</p>
+    <p class="dialog-footnote">No sign-in, API key, analytics, or productivity score. Source code is included with this project. “Clear local data” removes saved tasks and checkoffs, not model files cached by your browser.</p>
+    <button class="primary-button" id="dialog-done" type="button">Sounds good <span aria-hidden="true">✓</span></button>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
