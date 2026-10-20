@@ -1,7 +1,7 @@
 /** Open-weight embeddings; all task inference runs in this browser, not a hosted API. */
 import { CONTEXTS } from './core.mjs';
 export const MODEL_ID = 'Xenova/all-MiniLM-L6-v2';
-export const TRANSFORMERS_URL = 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/dist/transformers.web.js';
+export const TRANSFORMERS_URL = 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/dist/transformers.min.js';
 let extractorPromise;
 export async function loadEmbeddings(texts, onProgress = () => {}) {
   if (!Array.isArray(texts) || !texts.length || texts.length > 60) throw new Error('The model accepts between 1 and 60 task lines.');
