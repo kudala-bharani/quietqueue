@@ -20,7 +20,7 @@ export async function loadEmbeddings(texts, onProgress = () => {}) {
           else if (p.status === 'initiate') onProgress('Downloading model files. The first run can take a moment…');
         }
       });
-    })().catch(error => { extractorPromise = undefined; throw error; });
+    })().catch(error => { console.error('QuietQueue model loader:', error.message); extractorPromise = undefined; throw error; });
   }
   const extractor = await extractorPromise;
   onProgress('Finding related tasks on your device…');
