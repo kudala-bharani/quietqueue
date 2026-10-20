@@ -1,0 +1,20 @@
+// Real, opt-in integration test. Downloads open model weights; no personal input.
+import assert from 'node:assert/strict';
+import { pipeline, env } from '@huggingface/transformers';
+import { CONTEXTS, parseTasks, planTasks } from '../core.mjs';
+import { performance } from 'node:perf_hooks';
+env.allowLocalModels = false;
+const tasks = parseTasks('Send a note to the team [5m]\nGive the flowers a drink [3m]\nRespond to an invitation [5m]\nSweep the kitchen [7m]');
+const start = performance.now();
+const extractor = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2', { dtype: 'q8' });
+const result = await extractor([...tasks.map(t => t.text), ...CONTEXTS.map(c => c.anchor)], { pooling: 'mean', normalize: true });
+const vectors = result.tolist();
+assert.equal(vectors.length, tasks.length + CONTEXTS.length);
+assert.equal(vectors[0].length, 384);
+const plan = planTasks(tasks, { budget: 30, energy: 'low', embeddings: { vectors: vectors.slice(0,tasks.length), contexts: vectors.slice(tasks.length) } });
+assert.equal(plan.mode, 'ai');
+assert.equal(plan.selectedCount, 4);
+assert.equal(plan.selectedMinutes, 20);
+assert.ok(plan.batches.some(b => b.id === 'messages'));
+assert.ok(plan.batches.some(b => b.id === 'home'));
+console.log(JSON.stringify({model:'Xenova/all-MiniLM-L6-v2',dimensions:384,elapsedSeconds:Number(((performance.now()-start)/1000).toFixed(2)),plan},null,2));
