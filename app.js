@@ -171,6 +171,7 @@ async function generatePlan({ initial = false } = {}) {
   setBusy(true);
   let embeddings;
   let fallback = false;
+  let modelError = ''; 
   if (wantsAI) {
     let acceptProgress = true;
     let modelTimeout;
@@ -183,7 +184,8 @@ async function generatePlan({ initial = false } = {}) {
           modelTimeout = setTimeout(() => reject(new Error('Model loading took too long.')), 90000);
         })
       ]);
-    } catch {
+    } catch (error) {
+      modelError = String(error?.message || error);
       fallback = true;
     } finally {
       acceptProgress = false;
@@ -203,7 +205,7 @@ async function generatePlan({ initial = false } = {}) {
     completed = new Set([...completed].filter(id => validIds.has(id)));
     renderPlan();
     saveState();
-    if (fallback) status('The model couldn’t load. Your plan uses local rules instead. You can try AI again when online.', true);
+    if (fallback) status('AI unavailable: ' + (modelError || 'invalid model output') + '. Your plan uses local rules instead.', true);
     else if (wantsAI) status('Ready. AI grouping ran on your device; time estimates use simple rules.');
     else if (!initial) status('Ready. Your rule-based plan stays in this browser.');
   } catch (error) {
