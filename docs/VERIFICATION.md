@@ -12,7 +12,7 @@
 - Default eight-task sample produces a 30-minute session with six tasks and two parked.
 - Selecting 15 minutes yields three five-minute tasks with five parked.
 - Checkoff updates progress; Markdown export triggers a downloaded file.
-- Browser AI initialization is under investigation. Local model success does not establish browser model success.
+- Actual browser AI initialization and inference succeeded after switching to the standalone Transformers.js browser bundle; UI showed On-device AI and successful local inference. Checkoff persisted across reload.
 - No mobile-device test or productivity measurement is claimed.
 
 Synthetic sample inputs only. No private user mail/calendar/documents were processed.
