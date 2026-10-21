@@ -8,7 +8,7 @@ Optional **open-weight AI actually runs on your device**: MiniLM sentence embedd
 
 ## Try it
 
-A public demo URL will be added after deployment is verified.
+[Open the live demo](https://kudala-bharani.github.io/quietqueue/).
 
 Or run locally with any static HTTP server:
 
